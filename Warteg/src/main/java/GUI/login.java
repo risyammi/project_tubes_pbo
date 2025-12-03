@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+import java.net.URL;
+
 
 /**
  *
@@ -16,8 +18,16 @@ public class login extends javax.swing.JFrame {
      * Creates new form login
      */
     public login() {
+        System.out.println("hello");
+        URL imgPath = getClass().getResource("/images/login.jpeg");
+        System.out.println("IMAGE FOUND: " + imgPath);
         initComponents();
+        System.out.println("test");
     }
+    
+    /**
+     *
+     */
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -110,7 +120,7 @@ public class login extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(32, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,6 +178,11 @@ public class login extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new login().setVisible(true));
+        
+        System.out.println("test");
+
+
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
