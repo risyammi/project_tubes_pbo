@@ -126,12 +126,13 @@ public class MainMenuFrame extends javax.swing.JFrame {
                         .addGap(210, 210, 210)
                         .addComponent(jLabel8))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(239, 239, 239)
-                        .addComponent(jLabel9))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(jButton3)))
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(210, 210, 210))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -760,7 +761,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
     }
     
     private void setupKeranjang() {
-
+        jLabel9.setText(Session.getUsername() + "!");
         modelKeranjang = new DefaultTableModel(
             new Object[]{"Nama Produk", "Harga", "Qty", "Subtotal"},
             0
@@ -801,123 +802,122 @@ public class MainMenuFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void pesanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesanButtonActionPerformed
-        // 1. Ambil model tabel dari jTable1
-    javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+ javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
 
-    // Cek jika tidak ada pesanan
-    if (model.getRowCount() == 0) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Keranjang pesanan masih kosong!");
+// Cek jika tidak ada pesanan
+if (model.getRowCount() == 0) {
+    javax.swing.JOptionPane.showMessageDialog(this, "Keranjang pesanan masih kosong!");
+    return;
+}
+
+// Hitung Total Harga
+double totalHarga = 0;
+for (int i = 0; i < model.getRowCount(); i++) {
+    totalHarga += Double.parseDouble(model.getValueAt(i, 3).toString());
+}
+
+    // Ambil USER ID dari SESSION
+    int userId = Session.getUserId();
+    if (userId == 0) {  // atau == null jika tipe Integer
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "User ID tidak ditemukan! Harap login ulang.");
         return;
     }
 
-    // Hitung Total Harga (Menggunakan loop pada model tabel saat ini)
-    double totalHarga = 0;
-    // Asumsi: Kolom index 3 adalah subtotal harga (sesuai kode lamamu)
-    // Jika error, pastikan kolom ke-3 di tabelmu berisi angka (Double/Float/Integer)
-    for (int i = 0; i < model.getRowCount(); i++) {
-        // Mengambil nilai dan mengubahnya menjadi double agar aman perhitungannya
-        totalHarga += Double.parseDouble(model.getValueAt(i, 3).toString()); 
-    }
-
-    // 2. Buat String untuk daftar menu menggunakan StringBuilder
+    // 2. Buat String untuk daftar menu
     StringBuilder detailPesanan = new StringBuilder();
     detailPesanan.append("Apakah pesanan Anda sudah benar?\n\n");
     detailPesanan.append("Daftar Menu:\n");
 
     for (int i = 0; i < model.getRowCount(); i++) {
         String namaMenu = model.getValueAt(i, 0).toString();
-        String jumlah = model.getValueAt(i, 2).toString(); // Kolom 2 = Jumlah
-        
+        String jumlah = model.getValueAt(i, 2).toString();
         detailPesanan.append("- ").append(namaMenu)
                      .append(" (").append(jumlah).append("x)\n");
     }
-    
-    // Tambahkan Total Harga di akhir
+
     detailPesanan.append("\nTotal Harga: Rp. ").append((long)totalHarga);
 
-    // 3. Tampilkan Pop Up Konfirmasi (YES / NO)
+    // 3. Pop Up Konfirmasi
     int jawab = javax.swing.JOptionPane.showConfirmDialog(this, 
             detailPesanan.toString(), 
             "Konfirmasi Pesanan", 
             javax.swing.JOptionPane.YES_NO_OPTION);
 
-    // 4. Logika jika tombol YES ditekan
+    // 4. Jika YES, Simpan ke Database
     if (jawab == javax.swing.JOptionPane.YES_OPTION) {
-        
+
         Connection conn = null;
         try {
-            // --- KONEKSI DATABASE ---
-            // Sesuaikan user dan password dengan settingan MySQL kamu (XAMPP default: root, password kosong)
             String url = "jdbc:mysql://localhost:3306/warteg"; 
             String user = "root";
             String pass = ""; 
-            
-            conn = DriverManager.getConnection(url, user, pass);
-            conn.setAutoCommit(false); // Memulai Transaksi Database
 
-            // A. INSERT KE TABEL TRANSAKSI
-            String sqlTrans = "INSERT INTO Transaksi (total_harga, status_transaksi) VALUES (?, 'Pending')";
+            conn = DriverManager.getConnection(url, user, pass);
+            conn.setAutoCommit(false);
+
+            // A. INSERT TRANSAKSI + AMBIL USER ID
+            String sqlTrans = 
+                "INSERT INTO Transaksi (id_user, total_harga, status_transaksi) VALUES (?, ?, 'Pending')";
+
             PreparedStatement psTrans = conn.prepareStatement(sqlTrans, Statement.RETURN_GENERATED_KEYS);
-            psTrans.setDouble(1, totalHarga);
+            psTrans.setInt(1, userId);        // <<< INI PENTING !!!
+            psTrans.setDouble(2, totalHarga);
             psTrans.executeUpdate();
 
-            // Ambil ID Transaksi yang baru dibuat
+            // Ambil ID transaksi baru
             ResultSet rsKey = psTrans.getGeneratedKeys();
             int idTransaksiBaru = 0;
             if (rsKey.next()) {
                 idTransaksiBaru = rsKey.getInt(1);
             }
 
-            // B. INSERT KE TABEL DETAIL (Looping semua baris tabel GUI)
-            String sqlDetail = "INSERT INTO Detail (id_produk, id_transaksi, jumlah, harga_sub_total) VALUES (?, ?, ?, ?)";
+            // B. INSERT DETAIL TRANSAKSI
+            String sqlDetail = 
+                "INSERT INTO Detail (id_produk, id_transaksi, jumlah, harga_sub_total) VALUES (?, ?, ?, ?)";
             PreparedStatement psDetail = conn.prepareStatement(sqlDetail);
 
-            // Query bantuan untuk mencari ID Produk berdasarkan Nama
+            // Query untuk cari ID produk
             String sqlCariProduk = "SELECT id_produk, harga_produk FROM Produk WHERE nama_produk = ?";
             PreparedStatement psCari = conn.prepareStatement(sqlCariProduk);
 
             for (int i = 0; i < model.getRowCount(); i++) {
                 String namaMenu = model.getValueAt(i, 0).toString();
                 int jumlah = Integer.parseInt(model.getValueAt(i, 2).toString());
-                
-                // Cari ID Produk asli dari database
+
                 psCari.setString(1, namaMenu);
                 ResultSet rsProduk = psCari.executeQuery();
-                
+
                 if (rsProduk.next()) {
                     int idProduk = rsProduk.getInt("id_produk");
                     double hargaSatuan = rsProduk.getDouble("harga_produk");
                     double subTotalDB = hargaSatuan * jumlah;
 
-                    // Set parameter insert detail
                     psDetail.setInt(1, idProduk);
                     psDetail.setInt(2, idTransaksiBaru);
                     psDetail.setInt(3, jumlah);
                     psDetail.setDouble(4, subTotalDB);
-                    
-                    psDetail.executeUpdate(); // Eksekusi insert per baris
+
+                    psDetail.executeUpdate();
                 }
             }
 
-            // Simpan perubahan ke database
             conn.commit();
 
-            // C. RESET TAMPILAN
+            // Sukses
             javax.swing.JOptionPane.showMessageDialog(this, 
                 "Makanan sudah masuk ke list,\nSilahkan tunggu dan Bayar setelah makan.");
-            
-            model.setRowCount(0); // Hapus isi tabel
-            jLabel3.setText("TOTAL : Rp. 0"); // Reset Label Total
+
+            model.setRowCount(0);
+            jLabel3.setText("TOTAL : Rp. 0");
 
         } catch (Exception e) {
-            // Jika error, batalkan semua perubahan database
             try { if (conn != null) conn.rollback(); } catch (Exception ex) {}
             javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan: " + e.getMessage());
             e.printStackTrace();
         } finally {
             try { if (conn != null) conn.close(); } catch (Exception ex) {}
         }
-    
     } 
     // Logika jika tombol NO ditekan (Otomatis tertutup)
     }//GEN-LAST:event_pesanButtonActionPerformed

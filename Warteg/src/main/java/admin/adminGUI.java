@@ -5,6 +5,8 @@
 package admin;
 import models.*;
 import DAO.*;
+import GUI.Session;
+import GUI.login;
 import java.sql.*;
 import javax.swing.*;
 import java.io.*;
@@ -94,31 +96,31 @@ public class adminGUI extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        jLabel1.setText("Welcom Admin");
+        jLabel1.setFont(new java.awt.Font("Sylfaen", 1, 24)); // NOI18N
+        jLabel1.setText("Welcome Admin");
 
         jButton1.setText("logout");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addComponent(jLabel1)
-                .addContainerGap(292, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(37, 37, 37))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
+                .addContainerGap(283, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(45, 45, 45)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 656, Short.MAX_VALUE)
+                .addGap(55, 55, 55)
                 .addComponent(jButton1)
-                .addGap(14, 14, 14))
+                .addContainerGap(571, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Home", jPanel1);
@@ -472,7 +474,6 @@ public class adminGUI extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         try {
-            // ambil ID
             if (cari_id_field.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "ID produk belum diisi!");
                 return;
@@ -485,7 +486,6 @@ public class adminGUI extends javax.swing.JFrame {
 
             Produk p;
 
-            // Buat object sesuai kategori (penting!)
             switch (kategori) {
                 case "Lauk":
                     p = new Lauk(); 
@@ -508,13 +508,13 @@ public class adminGUI extends javax.swing.JFrame {
             p.setNama(nama);
             p.setHarga(harga);
             p.setKategori(kategori);
-            p.setGambar(gambarBytes); // gambar yang dipilih (boleh null)
+            p.setGambar(gambarBytes); 
 
             ProdukDAO dao = new ProdukDAO(conn.connect());
             dao.update(p);
 
             JOptionPane.showMessageDialog(this, "Produk berhasil diupdate!");
-            loadTabelProduk(); // refresh tabel
+            loadTabelProduk(); 
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
@@ -534,13 +534,11 @@ public class adminGUI extends javax.swing.JFrame {
                     return;
                 }
 
-                // tampilkan ke textfield
                 hasil_id_field.setText(String.valueOf(p.getId()));
                 hasil_nama_field.setText(p.getNama());
                 hasil_harga_field.setText(String.valueOf(p.getHarga()));
                 cbKategori.setSelectedItem(p.getKategori());
 
-                // tampilkan gambar
                 if (p.getGambar() != null) {
                     gambarBytes = p.getGambar();
                     tampilkanGambar(p.getGambar());
@@ -646,6 +644,15 @@ public class adminGUI extends javax.swing.JFrame {
         loadTabelTransaksi();
         loadTabelProduk();
     }//GEN-LAST:event_jTabbedPane1StateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        Session.destroy();
+        JOptionPane.showMessageDialog(this, "Logged out!");
+
+        new login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     
     private void setStatusComboBox() {
@@ -730,7 +737,7 @@ public class adminGUI extends javax.swing.JFrame {
 
             String sql = "SELECT t.id_transaksi, u.username, " +
                          "(SELECT SUM(jumlah) FROM Detail d WHERE d.id_transaksi = t.id_transaksi) AS jumlah, " +
-                         "t.id_total_harga, t.tgl_transaksi, t.status_transaksi " +
+                         "t.total_harga, t.tgl_transaksi, t.status_transaksi " +
                          "FROM Transaksi t LEFT JOIN Users u ON t.id_user = u.id_user";
 
             PreparedStatement ps = con.prepareStatement(sql);
