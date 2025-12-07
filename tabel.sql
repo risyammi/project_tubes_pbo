@@ -1,5 +1,5 @@
 -- -----------------------------------------------------
--- Database: warteg
+-- Database: WARTEG
 -- -----------------------------------------------------
 CREATE DATABASE IF NOT EXISTS warteg;
 USE warteg;
