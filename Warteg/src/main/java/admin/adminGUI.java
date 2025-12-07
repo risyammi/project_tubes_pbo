@@ -17,7 +17,7 @@ public class adminGUI extends javax.swing.JFrame {
      */
     public adminGUI() {
         initComponents();
-    }
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
