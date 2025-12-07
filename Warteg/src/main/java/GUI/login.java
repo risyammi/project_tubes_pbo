@@ -242,7 +242,9 @@ public class login extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(this, 
                                 "Login berhasil! Selamat datang " + username, 
                                 "Success", JOptionPane.INFORMATION_MESSAGE);
-
+                        
+                        Session.setSession(userId, username);
+                        
                         // Navigasi berdasarkan role
                         if (isAdmin) {
                             new adminGUI().setVisible(true);

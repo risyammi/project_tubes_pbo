@@ -96,13 +96,19 @@ public class MainMenuFrame extends javax.swing.JFrame {
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jPanel6.setBackground(new java.awt.Color(255, 155, 25));
+
+        jLabel8.setFont(new java.awt.Font("Baskerville", 1, 36)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(193, 40, 15));
         jLabel8.setText("WELCOME");
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Baskerville", 1, 48)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(193, 40, 15));
         jLabel9.setText("USER !");
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton3.setBackground(new java.awt.Color(193, 40, 15));
+        jButton3.setFont(new java.awt.Font("Baskerville", 1, 20)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 155, 25));
         jButton3.setText("Logout");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,8 +130,8 @@ public class MainMenuFrame extends javax.swing.JFrame {
                         .addComponent(jLabel9))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(219, Short.MAX_VALUE))
+                        .addComponent(jButton3)))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,21 +140,31 @@ public class MainMenuFrame extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 314, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
 
         jTabbedPane1.addTab("Welcome", jPanel6);
 
+        panelNasi.setBackground(new java.awt.Color(255, 155, 25));
+
+        nasiPanel.setBackground(new java.awt.Color(255, 155, 25));
+
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        nama_produk.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
         nama_produk.setText("Nama Produk");
 
+        harga_produk.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
         harga_produk.setText("Rp. 10.000");
 
+        tambah_ke_keranjang.setBackground(new java.awt.Color(193, 40, 15));
+        tambah_ke_keranjang.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
+        tambah_ke_keranjang.setForeground(new java.awt.Color(255, 155, 25));
         tambah_ke_keranjang.setText("Tambah Keranjang");
 
+        gambar_label.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
         gambar_label.setText("FOTO MAKANAN");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -213,20 +229,30 @@ public class MainMenuFrame extends javax.swing.JFrame {
             panelNasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelNasiLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Nasi", panelNasi);
 
+        panelLauk.setBackground(new java.awt.Color(255, 155, 25));
+
+        nasiPanel1.setBackground(new java.awt.Color(255, 155, 25));
+
         jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel7.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
         jLabel7.setText("Nama Produk");
 
+        jLabel11.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
         jLabel11.setText("Rp. 10.000");
 
+        jButton5.setBackground(new java.awt.Color(193, 40, 15));
+        jButton5.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 155, 25));
         jButton5.setText("Tambah Keranjang");
 
+        jLabel12.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
         jLabel12.setText("FOTO MAKANAN");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -292,20 +318,30 @@ public class MainMenuFrame extends javax.swing.JFrame {
             panelLaukLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLaukLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Lauk", panelLauk);
 
+        panelMinuman.setBackground(new java.awt.Color(255, 155, 25));
+
+        nasiPanel2.setBackground(new java.awt.Color(255, 155, 25));
+
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel13.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
         jLabel13.setText("Nama Produk");
 
+        jLabel15.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
         jLabel15.setText("Rp. 10.000");
 
+        jButton6.setBackground(new java.awt.Color(193, 40, 15));
+        jButton6.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 155, 25));
         jButton6.setText("Tambah Keranjang");
 
+        jLabel16.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
         jLabel16.setText("FOTO MAKANAN");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -371,20 +407,30 @@ public class MainMenuFrame extends javax.swing.JFrame {
             panelMinumanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMinumanLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Minuman", panelMinuman);
 
+        panelPaket.setBackground(new java.awt.Color(255, 155, 25));
+
+        nasiPanel3.setBackground(new java.awt.Color(255, 155, 25));
+
         jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel17.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
         jLabel17.setText("Nama Produk");
 
+        jLabel19.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
         jLabel19.setText("Rp. 10.000");
 
+        jButton7.setBackground(new java.awt.Color(193, 40, 15));
+        jButton7.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 155, 25));
         jButton7.setText("Tambah Keranjang");
 
+        jLabel20.setFont(new java.awt.Font("Baskerville", 0, 13)); // NOI18N
         jLabel20.setText("FOTO MAKANAN");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -450,17 +496,21 @@ public class MainMenuFrame extends javax.swing.JFrame {
             panelPaketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPaketLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Paket", panelPaket);
 
-        jPanel5.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel5.setBackground(new java.awt.Color(193, 40, 15));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setBackground(new java.awt.Color(255, 155, 25));
+        jLabel1.setFont(new java.awt.Font("Baskerville", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 155, 25));
         jLabel1.setText("PESANAN ANDA");
 
+        jTable1.setBackground(new java.awt.Color(233, 221, 205));
+        jTable1.setForeground(new java.awt.Color(86, 29, 15));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -474,10 +524,13 @@ public class MainMenuFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Baskerville", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 155, 25));
         jLabel3.setText("Total : Rp. 0");
 
-        pesanButton.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        pesanButton.setBackground(new java.awt.Color(255, 155, 25));
+        pesanButton.setFont(new java.awt.Font("Baskerville", 1, 20)); // NOI18N
+        pesanButton.setForeground(new java.awt.Color(193, 40, 15));
         pesanButton.setText("PESAN");
         pesanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -485,7 +538,9 @@ public class MainMenuFrame extends javax.swing.JFrame {
             }
         });
 
-        resetButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        resetButton.setBackground(new java.awt.Color(233, 221, 204));
+        resetButton.setFont(new java.awt.Font("Baskerville", 0, 20)); // NOI18N
+        resetButton.setForeground(new java.awt.Color(193, 40, 15));
         resetButton.setText("RESET");
         resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -504,17 +559,17 @@ public class MainMenuFrame extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
-                                .addComponent(jLabel1))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
                                 .addComponent(pesanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(resetButton)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(61, 61, 61))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(175, 175, 175))))
+                        .addGap(175, 175, 175))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(120, 120, 120))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -525,9 +580,9 @@ public class MainMenuFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addGap(36, 36, 36)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pesanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pesanButton)
                     .addComponent(resetButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -559,7 +614,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
     public void loadProdukKePanel(String kategori, JPanel panelTujuan) {
 
         panelTujuan.removeAll();
-        panelTujuan.setLayout(new FlowLayout(FlowLayout.LEFT)); // ← tambahkan
+        panelTujuan.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         List<Produk> list = getProdukByKategori(kategori);
 
@@ -719,7 +774,11 @@ public class MainMenuFrame extends javax.swing.JFrame {
 
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        Session.destroy();
+        JOptionPane.showMessageDialog(this, "Logged out!");
+
+        new login().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
