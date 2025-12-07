@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -310,7 +311,8 @@ public class register extends javax.swing.JFrame {
     private void showError(String msg, javax.swing.JComponent field) {
         JOptionPane.showMessageDialog(this, msg, "Error", JOptionPane.ERROR_MESSAGE);
         field.requestFocus();
-        if (field instanceof javax.swing.text.JTextComponent textField) {
+        if (field instanceof javax.swing.text.JTextComponent) {
+            javax.swing.text.JTextComponent textField = (javax.swing.text.JTextComponent) field;
             textField.selectAll();
         }
     }
