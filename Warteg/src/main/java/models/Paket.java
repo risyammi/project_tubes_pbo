@@ -2,82 +2,50 @@
 package models;
 import java.util.Objects;
 
-public class Paket {
+public class Paket extends Produk {
+
     private Lauk lauk;
     private Minuman minuman;
     private Nasi nasi;
 
     public Paket() {
-    }
-
-    public Paket(Lauk lauk, Minuman minuman, Nasi nasi) {
-        this.lauk = lauk;
-        this.minuman = minuman;
-        this.nasi = nasi;
+        this.kategori = "PAKET";
     }
 
     public Lauk getLauk() {
-        return this.lauk;
+        return lauk;
     }
 
     public void setLauk(Lauk lauk) {
         this.lauk = lauk;
+        hitungHarga();
     }
 
     public Minuman getMinuman() {
-        return this.minuman;
+        return minuman;
     }
 
     public void setMinuman(Minuman minuman) {
         this.minuman = minuman;
+        hitungHarga();
     }
 
     public Nasi getNasi() {
-        return this.nasi;
+        return nasi;
     }
 
     public void setNasi(Nasi nasi) {
         this.nasi = nasi;
+        hitungHarga();
     }
 
-    public Paket lauk(Lauk lauk) {
-        setLauk(lauk);
-        return this;
-    }
+    private void hitungHarga() {
+        float total = 0;
 
-    public Paket minuman(Minuman minuman) {
-        setMinuman(minuman);
-        return this;
-    }
+        if (lauk != null) total += lauk.getHarga();
+        if (minuman != null) total += minuman.getHarga();
+        if (nasi != null) total += nasi.getHarga();
 
-    public Paket nasi(Nasi nasi) {
-        setNasi(nasi);
-        return this;
+        this.harga = total;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Paket)) {
-            return false;
-        }
-        Paket paket = (Paket) o;
-        return Objects.equals(lauk, paket.lauk) && Objects.equals(minuman, paket.minuman) && Objects.equals(nasi, paket.nasi);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(lauk, minuman, nasi);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-            " lauk='" + getLauk() + "'" +
-            ", minuman='" + getMinuman() + "'" +
-            ", nasi='" + getNasi() + "'" +
-            "}";
-    }
-    
 }
