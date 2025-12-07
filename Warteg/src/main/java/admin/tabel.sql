@@ -7,7 +7,7 @@ USE warteg;
 -- -----------------------------------------------------
 -- Table: User
 -- -----------------------------------------------------
-CREATE TABLE User (
+CREATE TABLE Users (
     id_user INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(30) NOT NULL,
@@ -21,7 +21,8 @@ CREATE TABLE Produk (
     id_produk INT AUTO_INCREMENT PRIMARY KEY,
     nama_produk TEXT NOT NULL,
     harga_produk DECIMAL(10,2) NOT NULL,
-    gambar_produk BLOB
+    kategori VARCHAR(20) NOT NULL,
+    gambar_produk LONGBLOB
 );
 
 -- -----------------------------------------------------
@@ -29,13 +30,19 @@ CREATE TABLE Produk (
 -- -----------------------------------------------------
 CREATE TABLE Transaksi (
     id_transaksi INT AUTO_INCREMENT PRIMARY KEY,
-    id_total_harga DECIMAL(10,2) NOT NULL,
+    id_detail INT,
+    total_harga DECIMAL(10,2) NOT NULL,
     tgl_transaksi DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     status_transaksi VARCHAR(30) NOT NULL,
     id_user INT,
 
     CONSTRAINT fk_transaksi_user
-        FOREIGN KEY (id_user) REFERENCES User(id_user)
+        FOREIGN KEY (id_user) REFERENCES Users(id_user)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE
+    
+    CONSTRAINT fk_transaksi_detail
+        FOREIGN KEY (id_detail) REFERENCES Detail(id_detail)
         ON DELETE SET NULL
         ON UPDATE CASCADE
 );
