@@ -88,10 +88,9 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        pesanButton = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -475,39 +474,47 @@ public class MainMenuFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel2.setText("TOTAL :");
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setText("Rp. 0");
+        jLabel3.setText("Total : Rp. 0");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jButton1.setText("PESAN");
+        pesanButton.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        pesanButton.setText("PESAN");
+        pesanButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pesanButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setText("RESET");
+        resetButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        resetButton.setText("RESET");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap(74, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(168, 168, 168)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(jLabel1)))
-                .addGap(61, 61, 61))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(86, 86, 86)
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(pesanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(resetButton)))
+                        .addGap(61, 61, 61))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(175, 175, 175))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -516,15 +523,12 @@ public class MainMenuFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(25, 25, 25)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2))
+                    .addComponent(pesanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resetButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -534,7 +538,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -718,6 +722,147 @@ public class MainMenuFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        int jawab = javax.swing.JOptionPane.showConfirmDialog(this,
+            "Apakah Anda yakin ingin menghapus semua pesanan?",
+            "Konfirmasi Reset",
+            javax.swing.JOptionPane.YES_NO_OPTION);
+
+    if (jawab == javax.swing.JOptionPane.YES_OPTION) {
+
+        // 2. Mengambil Model Tabel untuk dihapus datanya
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+
+        // 3. Menghapus semua baris (set baris jadi 0)
+        model.setRowCount(0);
+
+        // 4. Update tampilan Label Total
+        jLabel3.setText("Rp. 0");
+    }
+    }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void pesanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesanButtonActionPerformed
+        // 1. Ambil model tabel dari jTable1
+    javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+
+    // Cek jika tidak ada pesanan
+    if (model.getRowCount() == 0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Keranjang pesanan masih kosong!");
+        return;
+    }
+
+    // Hitung Total Harga (Menggunakan loop pada model tabel saat ini)
+    double totalHarga = 0;
+    // Asumsi: Kolom index 3 adalah subtotal harga (sesuai kode lamamu)
+    // Jika error, pastikan kolom ke-3 di tabelmu berisi angka (Double/Float/Integer)
+    for (int i = 0; i < model.getRowCount(); i++) {
+        // Mengambil nilai dan mengubahnya menjadi double agar aman perhitungannya
+        totalHarga += Double.parseDouble(model.getValueAt(i, 3).toString()); 
+    }
+
+    // 2. Buat String untuk daftar menu menggunakan StringBuilder
+    StringBuilder detailPesanan = new StringBuilder();
+    detailPesanan.append("Apakah pesanan Anda sudah benar?\n\n");
+    detailPesanan.append("Daftar Menu:\n");
+
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String namaMenu = model.getValueAt(i, 0).toString();
+        String jumlah = model.getValueAt(i, 2).toString(); // Kolom 2 = Jumlah
+        
+        detailPesanan.append("- ").append(namaMenu)
+                     .append(" (").append(jumlah).append("x)\n");
+    }
+    
+    // Tambahkan Total Harga di akhir
+    detailPesanan.append("\nTotal Harga: Rp. ").append((long)totalHarga);
+
+    // 3. Tampilkan Pop Up Konfirmasi (YES / NO)
+    int jawab = javax.swing.JOptionPane.showConfirmDialog(this, 
+            detailPesanan.toString(), 
+            "Konfirmasi Pesanan", 
+            javax.swing.JOptionPane.YES_NO_OPTION);
+
+    // 4. Logika jika tombol YES ditekan
+    if (jawab == javax.swing.JOptionPane.YES_OPTION) {
+        
+        Connection conn = null;
+        try {
+            // --- KONEKSI DATABASE ---
+            // Sesuaikan user dan password dengan settingan MySQL kamu (XAMPP default: root, password kosong)
+            String url = "jdbc:mysql://localhost:3306/warteg"; 
+            String user = "root";
+            String pass = ""; 
+            
+            conn = DriverManager.getConnection(url, user, pass);
+            conn.setAutoCommit(false); // Memulai Transaksi Database
+
+            // A. INSERT KE TABEL TRANSAKSI
+            String sqlTrans = "INSERT INTO Transaksi (total_harga, status_transaksi) VALUES (?, 'Pending')";
+            PreparedStatement psTrans = conn.prepareStatement(sqlTrans, Statement.RETURN_GENERATED_KEYS);
+            psTrans.setDouble(1, totalHarga);
+            psTrans.executeUpdate();
+
+            // Ambil ID Transaksi yang baru dibuat
+            ResultSet rsKey = psTrans.getGeneratedKeys();
+            int idTransaksiBaru = 0;
+            if (rsKey.next()) {
+                idTransaksiBaru = rsKey.getInt(1);
+            }
+
+            // B. INSERT KE TABEL DETAIL (Looping semua baris tabel GUI)
+            String sqlDetail = "INSERT INTO Detail (id_produk, id_transaksi, jumlah, harga_sub_total) VALUES (?, ?, ?, ?)";
+            PreparedStatement psDetail = conn.prepareStatement(sqlDetail);
+
+            // Query bantuan untuk mencari ID Produk berdasarkan Nama
+            String sqlCariProduk = "SELECT id_produk, harga_produk FROM Produk WHERE nama_produk = ?";
+            PreparedStatement psCari = conn.prepareStatement(sqlCariProduk);
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+                String namaMenu = model.getValueAt(i, 0).toString();
+                int jumlah = Integer.parseInt(model.getValueAt(i, 2).toString());
+                
+                // Cari ID Produk asli dari database
+                psCari.setString(1, namaMenu);
+                ResultSet rsProduk = psCari.executeQuery();
+                
+                if (rsProduk.next()) {
+                    int idProduk = rsProduk.getInt("id_produk");
+                    double hargaSatuan = rsProduk.getDouble("harga_produk");
+                    double subTotalDB = hargaSatuan * jumlah;
+
+                    // Set parameter insert detail
+                    psDetail.setInt(1, idProduk);
+                    psDetail.setInt(2, idTransaksiBaru);
+                    psDetail.setInt(3, jumlah);
+                    psDetail.setDouble(4, subTotalDB);
+                    
+                    psDetail.executeUpdate(); // Eksekusi insert per baris
+                }
+            }
+
+            // Simpan perubahan ke database
+            conn.commit();
+
+            // C. RESET TAMPILAN
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Makanan sudah masuk ke list,\nSilahkan tunggu dan Bayar setelah makan.");
+            
+            model.setRowCount(0); // Hapus isi tabel
+            jLabel3.setText("TOTAL : Rp. 0"); // Reset Label Total
+
+        } catch (Exception e) {
+            // Jika error, batalkan semua perubahan database
+            try { if (conn != null) conn.rollback(); } catch (Exception ex) {}
+            javax.swing.JOptionPane.showMessageDialog(this, "Gagal menyimpan: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try { if (conn != null) conn.close(); } catch (Exception ex) {}
+        }
+    
+    } 
+    // Logika jika tombol NO ditekan (Otomatis tertutup)
+    }//GEN-LAST:event_pesanButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -746,8 +891,6 @@ public class MainMenuFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel gambar_label;
     private javax.swing.JLabel harga_produk;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -760,7 +903,6 @@ public class MainMenuFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
@@ -789,6 +931,8 @@ public class MainMenuFrame extends javax.swing.JFrame {
     private javax.swing.JPanel panelMinuman;
     private javax.swing.JPanel panelNasi;
     private javax.swing.JPanel panelPaket;
+    private javax.swing.JButton pesanButton;
+    private javax.swing.JButton resetButton;
     private javax.swing.JButton tambah_ke_keranjang;
     // End of variables declaration//GEN-END:variables
 }
