@@ -810,3 +810,4 @@ public class adminGUI extends javax.swing.JFrame {
     private javax.swing.JTable tblTransaksi;
     // End of variables declaration//GEN-END:variables
 }
+
