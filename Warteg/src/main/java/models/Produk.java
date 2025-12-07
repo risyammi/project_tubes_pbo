@@ -9,7 +9,7 @@ package models;
  * @author laudz
  */
 public class Produk {
-        protected int id;
+    protected int id;
     protected String nama;
     protected float harga;
     protected byte[] gambar;
