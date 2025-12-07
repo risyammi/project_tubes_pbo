@@ -50,3 +50,9 @@ CREATE TABLE Detail (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO Produk (nama_produk, harga_produk, kategori) VALUES
+('Nasi Putih', 5000, 'Makanan'),
+('Ayam Goreng', 15000, 'Makanan'),
+('Es Teh', 3000, 'Minuman'),
+('Tahu Goreng', 2000, 'Lauk');
