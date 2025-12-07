@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
 import java.net.URL;
 import config.ConnectionDB;
@@ -9,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  *
@@ -151,7 +149,7 @@ public class register extends javax.swing.JFrame {
         );
 
         jLabel3.setForeground(new java.awt.Color(193, 40, 15));
-        jLabel3.setText("Belum punya akun?");
+        jLabel3.setText("Sudah punya akun?");
 
         masuk_di_sini.setForeground(new java.awt.Color(233, 221, 204));
         masuk_di_sini.setText("Masuk di sini");
@@ -222,65 +220,100 @@ public class register extends javax.swing.JFrame {
         String password = new String(password_d.getPassword());
         String confirmPassword = new String(confirmPassword_d.getPassword());
 
-        //Cek field kosong
+        // Validasi input
         if (username.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Username harus diisi!", 
-                                          "Error", JOptionPane.ERROR_MESSAGE);
+            showError("Username harus diisi!", username_d);
             return;
         }
-        
         if (password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Password harus diisi!", 
-                                          "Error", JOptionPane.ERROR_MESSAGE);
+            showError("Password harus diisi!", password_d);
             return;
         }
-
         if (confirmPassword.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Konfirmasi password terlebih dahulu!", 
-                                          "Error", JOptionPane.ERROR_MESSAGE);
+            showError("Konfirmasi password harus diisi!", confirmPassword_d);
+            return;
+        }
+        if (username.length() < 3 || username.length() > 50) {
+            showError("Username harus 3–50 karakter!", username_d);
+            return;
+        }
+        if (password.length() < 8 || password.length() > 30) {
+            showError("Password harus 8–30 karakter!", password_d);
+            return;
+        }
+        if (!username.matches("^[a-zA-Z0-9_]+$")) {
+            showError("Username hanya boleh berisi huruf, angka, dan underscore!", username_d);
+            return;
+        }
+        if (!password.equals(confirmPassword)) {
+            showError("Password tidak sesuai!", password_d);
+            password_d.setText("");
+            confirmPassword_d.setText("");
             return;
         }
 
-        //Username check
-        if (usernameCheck(username)) {
-            JOptionPane.showMessageDialog(this, "Username tidak bisa digunakan!", 
-                                          "Error", JOptionPane.ERROR_MESSAGE);
+        // Cek username sudah ada
+        if (isUsernameExists(username)) {
+            showError("Username '" + username + "' sudah digunakan!", username_d);
             return;
         }
 
-        //Password verification
-        if (!passwordCheck(password, confirmPassword)) {
-            JOptionPane.showMessageDialog(this, "Password tidak sesuai!", 
-                                          "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        // Insert database
+        try (Connection conn = ConnectionDB.getConnection()) {
+            if (conn == null) {
+                JOptionPane.showMessageDialog(this, "Koneksi database gagal!",
+                                              "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-        //Insert data
-        String insertQuery = "INSERT INTO users(username, password) "
-                           + "VALUES (?, ?)";
+            String query = "INSERT INTO Users (username, password_hash, is_admin) VALUES (?, ?, ?)";
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                String hashedPassword = hashPassword(password);
 
-        try (Connection conn = ConnectionDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(insertQuery)) {
+                ps.setString(1, username);
+                ps.setString(2, hashedPassword);
+                ps.setBoolean(3, false);
 
-            ps.setString(1, username);
-            ps.setString(5, password); 
+                int rows = ps.executeUpdate();
 
-            ps.executeUpdate();
+                if (rows > 0) {
+                    JOptionPane.showMessageDialog(this,
+                        "Akun '" + username + "' berhasil didaftarkan!",
+                        "Sukses", JOptionPane.INFORMATION_MESSAGE
+                    );
 
-            JOptionPane.showMessageDialog(this, "Akun berhasil didaftarkan!");
+                    // Reset form
+                    username_d.setText("");
+                    password_d.setText("");
+                    confirmPassword_d.setText("");
 
-        // balik ke login
-        login login_page = new login();
-        login_page.setVisible(true);
-        this.dispose();
+                    // Kembali ke login
+                    login login_page = new login();
+                    login_page.setVisible(true);
+                    this.dispose();
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Gagal mendaftarkan akun.",
+                                                  "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Gagal mendaftarkan akun.", 
-                                          "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                "Database Error: " + e.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE
+            );
             e.printStackTrace();
         }
     }//GEN-LAST:event_daftar_btnActionPerformed
 
+    private void showError(String msg, javax.swing.JComponent field) {
+        JOptionPane.showMessageDialog(this, msg, "Error", JOptionPane.ERROR_MESSAGE);
+        field.requestFocus();
+        if (field instanceof javax.swing.text.JTextComponent textField) {
+            textField.selectAll();
+        }
+    }
     private void username_dActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username_dActionPerformed
        password_d.requestFocus();
     }//GEN-LAST:event_username_dActionPerformed
@@ -290,29 +323,50 @@ public class register extends javax.swing.JFrame {
     }//GEN-LAST:event_password_dActionPerformed
 
     private void confirmPassword_dActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmPassword_dActionPerformed
-        // TODO add your handling code here:
+       daftar_btn.doClick();
     }//GEN-LAST:event_confirmPassword_dActionPerformed
 
-    private boolean usernameCheck(String username) {
-        String query = "SELECT email FROM users WHERE username = ?";
+    private boolean isUsernameExists(String username) {
+        String query = "SELECT username FROM Users WHERE username = ?";
 
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
 
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
+            if (conn == null) return true;
 
-            return rs.next();
+            ps.setString(1, username);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
-            return true;
+            return false;
         }
     }
+
     
-    private boolean passwordCheck(String pass, String confirmPass) {
-        return pass.equals(confirmPass);
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = md.digest(password.getBytes());
+
+            StringBuilder hex = new StringBuilder();
+            for (byte b : hashBytes) {
+                String h = Integer.toHexString(0xff & b);
+                if (h.length() == 1) hex.append('0');
+                hex.append(h);
+            }
+            return hex.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            logger.log(java.util.logging.Level.SEVERE, "Error hashing password", e);
+            return "plain:" + password;
+        }
     }
+
+    
     /**
      * @param args the command line arguments
      */

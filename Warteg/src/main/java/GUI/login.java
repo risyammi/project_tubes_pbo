@@ -1,8 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUI;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import java.security.MessageDigest;
 import java.net.URL;
 
 
@@ -192,9 +195,85 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_daftar_di_siniMouseClicked
 
     private void masuk_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masuk_btnActionPerformed
-        MainMenuFrame menu_page = new MainMenuFrame();
-        menu_page.setVisible(true);
-        this.dispose();
+        String username = username_m.getText().trim();
+            String password = new String(password_m.getPassword());
+
+            // Validasi input kosong
+            if (username.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, 
+                        "Username atau password tidak boleh kosong!", 
+                        "Login Failed", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Koneksi database menggunakan ConnectionDB
+            Connection conn = null;
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+
+            try {
+                // Gunakan ConnectionDB yang sudah ada
+                conn = config.ConnectionDB.getConnection();
+
+                if (conn == null) {
+                    JOptionPane.showMessageDialog(this, 
+                            "Tidak dapat terhubung ke database!", 
+                            "Database Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Perbaiki query: gunakan Users (huruf besar) dan password_hash
+                String sql = "SELECT id_user, password_hash, is_admin FROM Users WHERE username = ?";
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, username);
+
+                rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    String hashedPassword = rs.getString("password_hash");
+                    int userId = rs.getInt("id_user");
+                    boolean isAdmin = rs.getBoolean("is_admin");
+
+                    // Verifikasi password
+                    if (verifyPassword(password, hashedPassword)) {
+                        // Buat objek User
+                        models.User loggedUser = new models.User(userId, username, hashedPassword, isAdmin);
+
+                        JOptionPane.showMessageDialog(this, 
+                                "Login berhasil! Selamat datang " + username, 
+                                "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                        // Navigasi berdasarkan role
+                        if (isAdmin) {
+                            new MainMenuFrame().setVisible(true);
+                        } else {
+                            new MainMenuFrame().setVisible(true);
+                        }
+                        this.dispose();
+
+                    } else {
+                        JOptionPane.showMessageDialog(this, 
+                                "Password salah!", 
+                                "Login Failed", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(this, 
+                            "Username tidak ditemukan!", 
+                            "Login Failed", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, 
+                        "Terjadi kesalahan: " + e.getMessage(), 
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
+
+            } finally {
+                try { if (rs != null) rs.close(); } catch (Exception e) {}
+                try { if (pst != null) pst.close(); } catch (Exception e) {}
+                try { if (conn != null) conn.close(); } catch (Exception e) {}
+            }
     }//GEN-LAST:event_masuk_btnActionPerformed
 
     private void username_mActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username_mActionPerformed
@@ -205,6 +284,29 @@ public class login extends javax.swing.JFrame {
         masuk_btn.doClick();
     }//GEN-LAST:event_password_mActionPerformed
 
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = md.digest(password.getBytes("UTF-8"));
+
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashBytes) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    private boolean verifyPassword(String plainPassword, String hashedPassword) {
+        try {
+            String hashedInput = hashPassword(plainPassword);
+            return hashedInput != null && hashedInput.equals(hashedPassword);
+        } catch (Exception e) {
+            return false;
+        }
+    }
     /**
      * @param args the command line arguments
      */
